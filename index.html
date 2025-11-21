@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }
+    #maindiv{
+        background-color: gray;
+        height:100vh;
+        width: 80vw;
+        border-radius: 10px;
+    }
+    #inputDiv{
+        height: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    img{
+        width: 50vmin;
+    }
+    #pokeImgFieldset{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: white;
+        color: black;
+    }
+</style>
+<body>
+    <div id="maindiv">
+            <div id="inputDiv">
+                <input type="text" id="pokemonName" placeholder="Enter your pokemon name">
+                <button onclick="fetchData()">submit</button>
+            </div>
+        <fieldset id="pokeImgFieldset">
+            <img src="" alt="PokemonImage" id="pokemonSprite" style="display:none">
+            <h2 id="pokeName" style="display:none"></h2>
+        </fieldset>
+    </div>
+</body>
+<script>
+    async function fetchData(){
+        try{
+            const pokemonName = document.getElementById("pokemonName").value.toLowerCase();
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+            if(!response.ok){
+                 throw new Error("Could not fetch resource");
+            }
+            const data = await response.json();
+            console.log(data.name);
+            console.log(data.weight);
+            console.log(data.height);
+            console.log(data.id);
+            console.log(data.sprites);
+            console.log(data);
+            const pokemonSprites = data.sprites.front_default;
+            const pokemonImage = document.getElementById("pokemonSprite");
+            pokemonImage.src = pokemonSprites;
+            pokemonImage.style.display = "block";
+            const pokeNames = data.name;
+            const pokename = document.getElementById("pokeName");
+            pokename.innerHTML = pokeNames;
+            pokename.style.display = "block";
+        }catch(error){
+            console.error(error);
+        }
+        
+    }
+</script>
+</html>
