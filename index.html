@@ -34,8 +34,11 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        background-color: white;
+        background-color: none;
         color: black;
+    }
+    @media (max-width: 600px){
+
     }
 </style>
 <body>
@@ -59,12 +62,6 @@
                  throw new Error("Could not fetch resource");
             }
             const data = await response.json();
-            console.log(data.name);
-            console.log(data.weight);
-            console.log(data.height);
-            console.log(data.id);
-            console.log(data.sprites);
-            console.log(data);
             const pokemonSprites = data.sprites.front_default;
             const pokemonImage = document.getElementById("pokemonSprite");
             pokemonImage.src = pokemonSprites;
@@ -73,10 +70,11 @@
             const pokename = document.getElementById("pokeName");
             pokename.innerHTML = pokeNames;
             pokename.style.display = "block";
+            const pokemonimgfieldset = document.getElementById("pokeImgFieldset");
+            pokemonimgfieldset.style.backgroundColor = "white";
         }catch(error){
             console.error(error);
         }
-        
     }
 </script>
 </html>
